@@ -306,22 +306,13 @@ def search_items():
         if not q.strip():
              return jsonify([])
 
-        query_embedding = parse_embedding(generate_embedding(q))
+        # Simple keyword search (case-insensitive if DB supports it or via ilike/contains)
+        # For compatibility with SQLite/Postgres in this simple setup:
+        search_filter = (models.Item.title.contains(q)) | (models.Item.description.contains(q))
+        items = db.query(models.Item).filter(models.Item.status == "open", search_filter).all()
 
-        items = db.query(models.Item).filter(models.Item.status == "open").all()
-        scored_items = []
-
-        for item in items:
-            item_embedding = parse_embedding(item.embedding)
-            if not item_embedding:
-                continue
-            similarity = cosine_similarity(query_embedding, item_embedding)
-            scored_items.append((item, similarity))
-
-        scored_items.sort(key=lambda x: x[1], reverse=True)
-        top_results = scored_items[:10]
-
-        return jsonify([item_to_dict(item, similarity=round(sim, 3)) for item, sim in top_results])
+        # No similarity score anymore, just set to 1.0 or None
+        return jsonify([item_to_dict(item, similarity=None) for item in items])
     finally:
         db.close()
 
