@@ -53,3 +53,9 @@ A modern web application to help students report and find lost items using AI-po
     -   `index.html`: Home page
     -   `style.css`: Styling
     -   `script.js`: API interactions
+## Team Members
+    Sreejith
+    Gopika
+    Krishna R S
+    Ayisha Beevi
+    Asmiya
