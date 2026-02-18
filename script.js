@@ -3,7 +3,7 @@
  * Uses backend API (Flask + SQLite) for all data operations.
  */
 
-const API_BASE = 'https://lostfound-fetm.onrender.com';
+const API_BASE = 'https://lostnfound-backend-pzcy.onrender.com/';
 const CURRENT_USER = localStorage.getItem('user_email') || ''; // Read logged-in user
 
 // ================================================
