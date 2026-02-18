@@ -16,7 +16,12 @@ from .config import UPLOAD_DIR
 # ------------------------------------
 # Create tables
 # ------------------------------------
-models.Base.metadata.create_all(bind=engine)
+print("Connecting to database and creating tables...")
+try:
+    models.Base.metadata.create_all(bind=engine)
+    print("Database tables created successfully.")
+except Exception as e:
+    print(f"Error creating database tables: {e}")
 
 app = Flask(__name__)
 CORS(app)

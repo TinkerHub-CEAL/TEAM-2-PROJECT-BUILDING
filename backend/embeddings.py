@@ -2,12 +2,21 @@ from sentence_transformers import SentenceTransformer
 import numpy as np
 import json
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
-
-
+model = None
+ 
+def get_model():
+    global model
+    if model is None:
+        print("Loading SentenceTransformer model...")
+        model = SentenceTransformer("all-MiniLM-L6-v2")
+        print("Model loaded.")
+    return model
+ 
+ 
 def generate_embedding(text: str) -> str:
     """Generate embedding and return as JSON string for MySQL TEXT storage."""
-    vec = model.encode(text).tolist()
+    m = get_model()
+    vec = m.encode(text).tolist()
     return json.dumps(vec)
 
 
