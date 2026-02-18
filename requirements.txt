@@ -1,6 +1,4 @@
 flask
 flask-cors
 sqlalchemy
-sentence-transformers
-numpy
 flask-jwt-extended
